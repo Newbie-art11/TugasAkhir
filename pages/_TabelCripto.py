@@ -107,7 +107,7 @@ def main():
     cryptos = ["BTC-USD", "ETH-USD","USDT-USD","BNB-USD", "SOL-USD","USDC-USD", "XRP-USD", "STETH-USD", "TON11419-USD", "DOGE-USD"]
     selected_crypto = st.selectbox("Pilih Cryptocurrency", cryptos)
     start_date = st.date_input("Tanggal Mulai", pd.to_datetime("2021-01-01"))
-    end_date = st.date_input("Tanggal Akhir", pd.to_datetime("2024-06-30"))
+    end_date = st.date_input("Tanggal Akhir", pd.to_datetime("2024-07-31"))
     if st.button("Download Data"):
         with st.spinner("Mengunduh data..."):
             df = yf.download(selected_crypto, start=start_date, end=end_date)

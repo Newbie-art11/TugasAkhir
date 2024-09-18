@@ -20,7 +20,7 @@ def main():
     symbol_stock = st.sidebar.selectbox("Pilih Crypto", cryptos)
     model_choice = st.sidebar.radio("Pilih Model:", ["Exponentially Weighted Moving Average (EWMA)", "Triple Exponential Smoothing (TES)"])
     start_date = st.sidebar.date_input("Tanggal Mulai", pd.to_datetime("2021-01-01"))
-    end_date = st.sidebar.date_input("Tanggal Terakhir", pd.to_datetime("2024-07-30"))
+    end_date = st.sidebar.date_input("Tanggal Terakhir", pd.to_datetime("2024-07-31"))
 
     if end_date < start_date:
         st.sidebar.error("End date must be after start date")
