@@ -9,13 +9,12 @@ from sklearn.metrics import mean_squared_error
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
 
 
-#List 10 cryptocurrency 
 
 cryptosList = ["BTC-USD", "ETH-USD", "USDT-USD", "BNB-USD", "SOL-USD", "USDC-USD", "XRP-USD", "STETH-USD", "TON11419-USD", "DOGE-USD"]
 
-for model in cryptosList:
-    with open(f'models/ewma_model_{model}.pkl', 'rb') as f:  # f-string digunakan di sini
-        loaded_model = pickle.load(f)
+# for model in cryptosList:
+#     with open(f'models/ewma_model_{model}.pkl', 'rb') as f:  # f-string digunakan di sini
+#         loaded_model = pickle.load(f)
         # Lakukan sesuatu dengan loaded_model
 def main():
     st.title("Selamat Datang di Top 10 Crptocurrency Prediksi Untuk Kedua Metode")

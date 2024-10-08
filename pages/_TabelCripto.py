@@ -33,7 +33,6 @@ def getCrptodata(coins):
 
 def get_crypto_price(crypto_info):
     try:
-        # Mendapatkan harga koin kripto dari yfinance
         crypto_data = crypto_info.history(period="1d")
         if not crypto_data.empty:
             return crypto_data['Close'][0]
@@ -43,7 +42,6 @@ def get_crypto_price(crypto_info):
 
 def get_crypto_prices_weekly(crypto_info):
     try:
-        # Mendapatkan data harga koin kripto per minggu dari yfinance
         crypto_data = crypto_info.history(period="1mo", interval="1wk")
         if not crypto_data.empty:
             return crypto_data['Close']
@@ -54,12 +52,11 @@ def get_crypto_prices_weekly(crypto_info):
 def normalize_prices(prices):
     if prices is not None and not prices.empty:
         mean_price = prices.mean()
-        return prices / mean_price  # Normalisasi dengan membagi setiap harga dengan mean
+        return prices / mean_price  
     return None
 
 
 def crypto_data_week(coins):
-    # Menyiapkan data untuk ditampilkan dalam tabel mingguan
     list_crypto = []
     for coin in coins:
         try:
@@ -71,10 +68,7 @@ def crypto_data_week(coins):
             total_price = weekly_prices.sum() if weekly_prices is not None else None
             
             if normalized_prices is not None:
-                # Mengubah data harga menjadi string yang mudah dibaca
                 normalized_prices_str = "; ".join([f"{date.strftime('%Y-%m-%d')}: {price:.4f}" for date, price in normalized_prices.items()])
-                
-                # Tambahkan informasi ke dalam list
                 list_crypto.append({
                     'Nama': name_crypto,
                     'Kode': symbol_crypto,
@@ -102,7 +96,6 @@ def main():
     st.title("Tabel Crypto")
     st.table(df_data_Day)
     st.divider()
-    # Judul aplikasi
     st.title("Profile TOP 10 Data Cryptocurrency")
     cryptos = ["BTC-USD", "ETH-USD","USDT-USD","BNB-USD", "SOL-USD","USDC-USD", "XRP-USD", "STETH-USD", "TON11419-USD", "DOGE-USD"]
     selected_crypto = st.selectbox("Pilih Cryptocurrency", cryptos)

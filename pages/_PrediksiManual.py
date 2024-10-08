@@ -170,7 +170,7 @@ def main():
             return f'color: {color}'
 
         # Apply conditional formatting
-        styled_forecast_df = forecast_df.style.applymap(color_accuracy, subset=['Accuracy (%)' ,'Loss'])
+        styled_forecast_df = forecast_df.style.applymap(color_accuracy, color_loss,subset=['Accuracy (%)' ,'Loss'])
 
         # Display DataFrame in Streamlit with conditional formatting
         st.write(styled_forecast_df)
