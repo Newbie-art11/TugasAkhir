@@ -47,16 +47,57 @@ def main():
     high_price = data['High'].resample('W').std()
     close_price = data['Close'].resample('W').std()
     volume_price = data['Volume'].resample('W').std()
+    combineData = pd.DataFrame({
+        'HargaBuka': open_price,
+        'HargaTertingi': high_price,
+        'HargaTutup': close_price,
+        'HargaVolume': volume_price
+    })
+    #Aggregaasi data with week
+    st.title('Agregasi Data Mingguan Menggunakan Standar Deviasi')
+    st.dataframe(combineData)
+    
+    minvalueOpen = open_price.min()
+    maxvalueOpen = open_price.max()
+    minvalueHigh = high_price.min()
+    maxvalueHigh = high_price.max()
+    minvalueClose = close_price.min()
+    maxvalueClose = close_price.max()
+    minvalueVolume = volume_price.min()
+    maxvalueVolume = volume_price.max()
 
+    # Print min and max values for debugging
+    st.write(maxvalueOpen)
+    st.write(minvalueOpen)
+    # Correct MinMax scaling formula
+    scaledDataOpen = (open_price - minvalueOpen) / (maxvalueOpen - minvalueOpen) 
+    scaledDataHigh = (high_price - minvalueHigh) / (maxvalueHigh - minvalueHigh) 
+    scaledDataClose = (close_price - minvalueClose) / (maxvalueClose - minvalueClose) 
+    scaledDataVolume = (volume_price - minvalueVolume) / (maxvalueVolume - minvalueVolume) 
+
+    # Print scaled close price for debugging
+    print(scaledDataClose)
+
+    combineDataScale = pd.DataFrame({
+    'HargaBuka': scaledDataOpen,
+    'HargaTertinggi': scaledDataHigh,
+    'HargaTutup': scaledDataClose,
+    'HargaVolume': scaledDataVolume
+    })
+    print(scaledDataOpen)
+    # Streamlit title and dataframe
+    st.title('Praproses data menggunakan MinMax Scalling')
+    st.dataframe(combineDataScale)
+    
     train_size = int(len(close_price) * 0.8)
-    train_close = close_price[:train_size]
-    test_close = close_price[train_size:]
-    train_open = open_price[:train_size]
-    test_open = open_price[train_size:]
-    train_high = high_price[:train_size]
-    test_high = high_price[train_size:]
-    train_volume = volume_price[:train_size]
-    test_volume = volume_price[train_size:]
+    train_close = scaledDataClose[:train_size]
+    test_close = scaledDataClose[train_size:]
+    train_open = scaledDataOpen[:train_size]
+    test_open = scaledDataOpen[train_size:]
+    train_high = scaledDataHigh[:train_size]
+    test_high = scaledDataHigh[train_size:]
+    train_volume = scaledDataVolume[:train_size]
+    test_volume = scaledDataVolume[train_size:]
 
     # Parameter Selection
     st.header("Manual Parameter Selection")
@@ -144,7 +185,6 @@ def main():
         
         st.plotly_chart(fig)
         st.write("Forecast Table:")
-
         # Menghitung akurasi dan loss
         accuracy = 100 - (np.abs((actual - forecast) / actual) * 100)
         loss = np.abs(actual - forecast)
@@ -160,21 +200,22 @@ def main():
         # Format the index to remove time component
         forecast_df.index = forecast_df.index.strftime('%Y-%m-%d')
 
-        # Function to apply color formatting
+        # Function to apply color formatting for accuracy
         def color_accuracy(val):
             color = 'green' if val >= 95 else 'red'  # Set threshold for accuracy, e.g., 95% as stable
             return f'color: {color}'
 
+        # Function to apply color formatting for loss
         def color_loss(val):
             color = 'green' if val <= 100000 else 'red'  # Set threshold for loss, e.g., below 100,000 is stable
             return f'color: {color}'
 
-        # Apply conditional formatting
-        styled_forecast_df = forecast_df.style.applymap(color_accuracy, color_loss,subset=['Accuracy (%)' ,'Loss'])
+        # Apply conditional formatting separately for each column
+        styled_forecast_df = forecast_df.style.applymap(color_accuracy, subset=['Accuracy (%)']) \
+                                            .applymap(color_loss, subset=['Loss'])
 
         # Display DataFrame in Streamlit with conditional formatting
         st.write(styled_forecast_df)
-
 
         
 if __name__ == "__main__":

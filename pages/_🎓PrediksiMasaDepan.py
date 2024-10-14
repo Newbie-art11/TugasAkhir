@@ -5,35 +5,21 @@ import plotly.graph_objects as go
 import pickle
 
 cryptos = ["BTC-USD", "ETH-USD","USDT-USD","BNB-USD", "SOL-USD","USDC-USD", "XRP-USD", "STETH-USD", "TON11419-USD", "DOGE-USD"]
-with open('models/ewma_model_ETH-USD.pkl', 'rb') as f:
-    loaded_model = pickle.load(f)
 def main():
     st.title("Selamat Datang di Top 10 Cryptocurrency Prediksi di Masa Depan")
     st.write("This app predicts cryptocurrency prices EWMA dan TES")
-        # Memuat model EWMA dari file
-    with open('models/ewma_model_ETH-USD.pkl', 'rb') as f:
-        loaded_model = pickle.load(f)
     #Sidebar Input Data
     st.sidebar.header("Data Unduhan")
     stock_symbol = st.sidebar.selectbox("Pilih Cryptocurrenccy:", cryptos)
-    
-    
     #Download Stock price data 
     start = "2021-01-01"
     end = "2024-07-30"
     data = yf.download(stock_symbol,start=start,end=end)
-    
     #Prosess Close Price 
     open_price = data['Open'].resample('W').std()
     high_price = data['High'].resample('W').std()
     close_price = data['Close'].resample('W').std()
     volume_price = data['Volume'].resample('W').std()
-    
-    # print(open_price)
-    # print(high_price)
-    # print(close_price)
-    # print(volume_price)
-    
     #Splitting data 
     train_size = int(len(close_price) * 0.8)
     train_close = close_price[:train_size]

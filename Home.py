@@ -8,12 +8,12 @@ def line(n=1):
 def main():
     # Path relatif ke file logo
     image_url = "src/images/logo.png"
+    
     # Display the image with custom alignment
     alignment = "center"  # Change to "left", "center", or "right"
     width = 100  
     # Set the desired height
     height = 200  # Adjust the height of the image (in pixels)
-
     # Apply the CSS for alignment
     st.markdown(
         f"""
@@ -30,18 +30,14 @@ def main():
         """,
         unsafe_allow_html=True
     )
-
     # Display the image
     st.image(image_url, caption='Unimal Hebat', use_column_width=False)
-
     # Dataframe selection
     st.markdown("<h2 align='center'> <b>PERBANDINGAN METODE <i>EXPONENTIALLY WEIGHTED MOVING AVERAGE </i>(EWMA) DAN METODE <i>TRIPLE EXPONENTIAL SMOOTHING </i>(TES) UNTUK PERAMALAN CRYPTOCURRENCY</b></h2>", unsafe_allow_html=True)
     line(1)
     st.markdown("Selamat datang! Aplikasi ini dirancang untuk membandingkan metode <i>Exponentially Weighted Moving Average</i> (EWMA) dan metode <i>Triple Exponential Smoothing</i> (TES) dalam memprediksi harga <i>cryptocurrency</i>. Platform ini diharapkan menjadi fondasi bagi strategi perdagangan yang lebih cerdas dan keputusan investasi yang lebih tajam dalam dunia cryptocurrency, membuka peluang untuk keuntungan yang lebih optimal.", unsafe_allow_html=True)
     line()
-    
     #EWMA EXPLAINED
-    
     st.header("Exponentially Weighted Moving Average (EWMA)")
     st.subheader("Keterangan")
     line(1)
@@ -52,5 +48,20 @@ def main():
     line(1)
     st.markdown("Triple Exponential Smoothing (TES), juga dikenal sebagai metode Holt-Winters, adalah metode yang lebih kompleks yang digunakan untuk memodelkan data time series yang memiliki tren dan musiman (seasonality). TES adalah pengembangan dari Single Exponential Smoothing (SES) dan Double Exponential Smoothing (DES) yang menambahkan komponen musiman ke dalam model.")
     st.divider()
+    st.header("Kontributor Sukma Rizki")
+    st.markdown("""
+    Jika anda memiliki pertanyaan atau saran, jangan ragu untuk menghubungi **sukmarizki@gmail.com**. Kami membantu anda! 
+    <br><br>
+    **Connect with us on social media:**
+    <br><br>
+    <a href="https://www.linkedin.com/in/sukma-rizki-4b78a0244/" target="_blank">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe0adDoUGWVD3jGzfT8grK5Uhw0dLXSk3OWJwZaXI-t95suRZQ-wPF7-Az6KurXDVktV4&usqp=CAU" alt="LinkedIn" width="80" height="80" style="border-radius: 25%;">
+    </a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://www.instagram.com/thesukmarizki/" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png" alt="Instagram" width="80" height="80" style="border-radius: 25%;">
+    </a>
+    """, unsafe_allow_html=True)
+
 if __name__ == "__main__":
         main()
